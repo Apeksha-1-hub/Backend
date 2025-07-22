@@ -36,7 +36,7 @@ export const register = async(req,res)=>{
     }
 }
 
-export const login = async(req,res)=>{
+export const login = async(req,res,)=>{
     try {
     const {email,password} = req.body;
     if( !email || !password){
@@ -65,5 +65,28 @@ export const login = async(req,res)=>{
     
     } catch (err) {
         console.log("err occured",err)
+    }
+}
+
+export const Alluser = async (req,res)=>{
+    try {
+        const user = await User.find().select("-password")
+        res.status(200).json({
+            data:user
+        })
+    } catch (error) {
+        console.error("error",error.message)
+    }
+}
+
+export const getSpecificUser =async (req,res)=>{
+    try {
+        const {id} = req.params
+        const user = await User.findById(id).select("-password")
+        res.status(200).json({
+            data:user
+        })
+    } catch (error) {
+        console.error("error",error.message)
     }
 }
